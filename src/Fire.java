@@ -60,24 +60,24 @@ public class Fire {
         Queue<FireLocation> queue = new LinkedList<>();
         queue.add(new FireLocation(matchR, matchC, 0));
 
-        Set<FireLocation> visited = new HashSet<>();
+        boolean[][] visited = new boolean[forest.length][forest[0].length];
 
         int maxTime = 0;
 
         while (!queue.isEmpty()) {
             FireLocation current = queue.poll();
 
-            if (visited.contains(current)) {
+            if (visited[current.row()][current.col()]) {
                 continue;
             }
-            visited.add(current);
+
+            visited[current.row()][current.col()] = true;
 
             maxTime = Math.max(maxTime, current.time());
 
             for (FireLocation neighbor : neighbors(forest, current)) {
                 queue.add(neighbor);
             }
-
         }
         return maxTime;
     }
