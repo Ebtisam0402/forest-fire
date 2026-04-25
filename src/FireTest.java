@@ -21,5 +21,24 @@ public class FireTest {
         assertEquals(expected, actual);
     }
 
+
+        @Test
+    public void testTimeToBurnSingleTree() {
+        char[][] forest = {
+            {'.','.','.','.','.','.','.','.','.'},
+            {'.','.','.','.','.','.','.','.','.'},
+            {'.','.','.','t','.','.','.','.','.'},
+            {'.','.','.','t','.','.','.','.','.'}
+        };
+
+        int matchR = 3;
+        int matchC = 3;
+
+        int expected = 1;
+        int actual = Fire.timeToBurn(forest, matchR, matchC);
+
+        assertEquals(expected, actual);
+    }
+
     // Add more tests!
 }
