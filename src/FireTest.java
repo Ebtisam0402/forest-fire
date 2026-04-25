@@ -57,8 +57,8 @@ public class FireTest {
     @Test
     public void testTimeToBurnBlockedByEmptySpace() {
         char[][] forest = {
-        { 't', '.', 't' }
-    };
+                { 't', '.', 't' }
+        };
 
         int matchR = 0;
         int matchC = 0;
@@ -67,7 +67,22 @@ public class FireTest {
         int actual = Fire.timeToBurn(forest, matchR, matchC);
 
         assertEquals(expected, actual);
-}
+    }
+
+    @Test
+    public void testStrightLine() {
+        char[][] forest = {
+                { 't', 't', 't', 't' }
+        };
+
+        int matchR = 0;
+        int matchC = 0;
+
+        int expected = 3;
+        int actual = Fire.timeToBurn(forest, matchR, matchC);
+
+        assertEquals(expected, actual);
+    }
 
     // Add more tests!
 }
