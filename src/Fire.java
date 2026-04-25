@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -50,33 +52,56 @@ public class Fire {
     public static int timeToBurn(char[][] forest, int matchR, int matchC) {
         // HINT: when adding to your BFS queue, you can include more information than
         // just a location. What other information might be useful?
-        //put other things in a queue
-        if(forest[matchR][matchC] != 't'){
+        // put other things in a queue
+        if (forest[matchR][matchC] != 't') {
             return 0;
         }
 
         Queue<FireLocation> queue = new LinkedList<>();
-        queue.add(new FireLocation(matchR, matchC,0));
+        queue.add(new FireLocation(matchR, matchC, 0));
 
         Set<FireLocation> visited = new HashSet<>();
 
         int maxTime = 0;
 
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             FireLocation current = queue.poll();
 
-            if(visited.contains(current)){
+            if (visited.contains(current)) {
                 continue;
             }
             visited.add(current);
 
             maxTime = Math.max(maxTime, current.time());
 
-            for(FireLocation neighbor: neighbors(forest, current)){
+            for (FireLocation neighbor : neighbors(forest, current)) {
                 queue.add(neighbor);
             }
 
         }
         return maxTime;
-}
+    }
+
+    public static List<FireLocation> neighbors(char[][] forest, FireLocation current) {
+        List<FireLocation> result = new ArrayList<>();
+
+        int[][] moves = new int[][] {
+                { -1, 0 }, // Up
+                { 1, 0 }, // Down
+                { 0, -1 }, // Left
+                { 0, 1 } // Right
+        };
+
+        for (int[] move : moves) {
+            int newR = current.row() + move[0];
+            int newC = current.col() + move[1];
+
+            if (newR >= 0 && newR < forest.length &&
+                    newC >= 0 && newC < forest[0].length &&
+                    forest[newR][newC] == 't') {
+                result.add(new FireLocation(newR, newC, current.time() + 1));
+            }
+        }
+        return result;
+    }
 }
